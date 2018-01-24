@@ -52,33 +52,3 @@ sudo pacman -S lxappearance
 2. sudo pacman -S arc-icon-gtk
 3. sudo pacman -S elementary-icon-theme 
 4. Launch "lxappearance" and choose the installed theme.
-
-### Install QT4 and 5 theme
-1. sudo pacman -S qt5-base qt4
-2. sudo pacman -S oxygen oxygen-kde4
-3. Add at the end of ~/.config/Trolltech.conf
-```
-[Qt]
-style=Oxygen
-``̀`
-
-### Install *compton*, to enable transparency effect of *rofi*
-
-1. Install `sudo pacman -S compton`
-2. Copy compton.conf `cp /etc/xdg/compton.conf ~/.config/compton.conf`
-3. Add `opacity-rule = ["80:class_g = gnome-terminal"];` in the compton.conf file
-4. Add `exec_always compton --config /home/romain/.config/compton.conf` to i3 configuration file
-
-
-### Customize bar using i3blocks instead of i3status
-
-The default status bar is updated using *i3status*. Change this to *i3blocks* which is easier to control.
-
-1. Copy the default *i3blocks* config file:
-```
-cp /etc/i3blocks.conf ~/.i3/
-```
-
-2. Use *i3blocks* in the **bar** section of the i3 config file.
-
-3. Edit the `~/.i3/i3blocks.conf` file.
