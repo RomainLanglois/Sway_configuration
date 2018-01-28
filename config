@@ -142,7 +142,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 ## screen locker
-bindsym $mod+x exec /home/romain/.config/i3/i3lock-fancy-git/src/i3lock-fancy/./lock -gpf Cantarell-Bold -- scrot -z
+bindsym $mod+x exec ~/.config/i3/i3lock-fancy-git/src/i3lock-fancy/./lock -gpf Cantarell-Bold -- scrot -z
 
 ##Applications
 bindsym $mod+shift+f exec firefox
@@ -178,7 +178,7 @@ mode "resize" {
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks -c /home/romain/.config/i3/i3blocks.conf
+        status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	colors{
 		background $bg-color
 	    	separator #757575
@@ -193,7 +193,7 @@ bar {
 assign [class="Firefox"] $workspace2
 
 # Exec section
-exec_always feh --bg-scale /home/romain/Pictures/wallpaper.jpeg
-exec_always xrandr --output VGA-1 --primary --mode 1600x900 --pos 0x0 --rotate normal
-# exec_always compton --config /home/romain/.config/compton.conf
+exec_always feh --bg-scale ~/Pictures/wallpaper.jpeg
+#exec_always xrandr --output VGA-1 --primary --mode 1600x900 --pos 0x0 --rotate normal
+#exec_always compton --config ~/.config/compton.conf
 exec --no-startup-id nm-applet
