@@ -1,11 +1,11 @@
 # Variables
 ## Workspaces
 set $mod Mod4
-set $workspace1 "1. "
-set $workspace2 "2. "
-set $workspace3 "3. "
-set $workspace4 "4. "
-set $workspace5 "5. RamBox"
+set $workspace1 "1. Terminales"
+set $workspace2 "2. Firefox"
+set $workspace3 "3. Code"
+set $workspace4 "4. Messagerie"
+set $workspace5 "5. Rambox"
 set $workspace6 "6."
 set $workspace7 "7."
 set $workspace8 "8."
@@ -105,7 +105,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+l exec --no-startup-id ~/.config/i3/i3lock-fancy-multimonitor/./lock -p
 ### lock screen and suspend
 bindsym $mod+shift+l exec --no-startup-id "~/.config/i3/i3lock-fancy-multimonitor/./lock -p && systemctl suspend"
-### Reboot 
+### Reboot
 bindsym $mod+shift+m exec --no-startup-id systemctl reboot
 ### Poweroff
 bindsym $mod+shift+p exec --no-startup-id systemctl poweroff
@@ -114,6 +114,7 @@ bindsym $mod+shift+p exec --no-startup-id systemctl poweroff
 ## Applications
 bindsym $mod+shift+f exec firefox
 bindsym $mod+e exec thunar
+bindsym $mod+a exec gnome-system-monitor
 
 
 # Resize window (you can also use the mouse for that)
@@ -141,8 +142,8 @@ mode "resize" {
 }
 
 # Pulse audio control
-bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+
-bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%-
+bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
+bindsym XF86AudioLowerVolume exec amixer set Master 5%-
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
 # Sreen brightness controls
@@ -172,11 +173,16 @@ bar {
 # Assign
 assign [class="Firefox"] $workspace2
 assign [class="jetbrains-pycharm-ce"] $workspace3
+assign [class="atom"] $workspace3
 assign [class="Thunderbird"] $workspace4
 assign [class="Rambox"] $workspace5
 
 # Exec section
 exec_always feh --bg-scale ~/Pictures/wallpaper.png
+exec --no-startup-id rambox
 exec --no-startup-id nm-applet
 exec --no-startup-id xautolock -time 5 -locker ~/.config/i3/i3lock-fancy-multimonitor/./lock -p
 
+
+# Calendar
+for_window [class="(?i)gsimplecal"] floating enable, move position mouse, move down -5 px
