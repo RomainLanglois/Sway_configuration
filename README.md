@@ -96,14 +96,3 @@ Add this at the end
 [Qt]
 style=Oxygen
 ```
-
-### Download and install icons font
-1. Download the font from [this link](https://github.com/FortAwesome/Font-Awesome/releases) 
-```
-unzip ~/Download/Font-Awesome-4.7.0.zip
-mkdir ~/.fonts
-cp ~/Download/Font-Awesome-4.7.0/fonts/fontawesome-webfont.ttf ~/.fonts
-```
-
-2. Copy the icons
-Copy the icons from [this link](http://fontawesome.io/cheatsheet/)
