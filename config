@@ -102,9 +102,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 ## Screen locker
-bindsym $mod+l exec --no-startup-id ~/.config/i3/i3lock-fancy-multimonitor/./lock -p
+bindsym $mod+l exec --no-startup-id ~/.config/i3/./lock.sh
 ### lock screen and suspend
-bindsym $mod+shift+l exec --no-startup-id "~/.config/i3/i3lock-fancy-multimonitor/./lock -p && systemctl suspend"
+bindsym $mod+shift+l exec --no-startup-id "~/.config/i3/./lock.sh && systemctl suspend"
 ### Reboot
 bindsym $mod+shift+m exec --no-startup-id systemctl reboot
 ### Poweroff
