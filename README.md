@@ -45,17 +45,24 @@ Friendly copy and paste
 mkdir build && cd build && cmake .. && make -j$(nproc)
 ```
 
-## Add a symbolic link
+#### Add a symbolic link
 ```
 ln -s polybar /usr/bin/polybar 
 ```
 
-## Create the config file
+#### Create the config file
 ```
 install -Dm644 /usr/local/share/doc/polybar/config $HOME/.config/polybar/config
 ```
 
-## Check if polybar works
+#### Check if polybar works
 ```
 polybar example
 ```
+
+
+## ToDO List
+- Modify the calendar script in the polybar config file
+    - Remove the calendar_config file
+
+- Make mpd work
