@@ -60,9 +60,11 @@ install -Dm644 /usr/local/share/doc/polybar/config $HOME/.config/polybar/config
 polybar example
 ```
 
+## Install the awesome-font
+```
+sudo apt install fonts-font-awesome
+```
 
 ## ToDO List
 - Modify the calendar script in the polybar config file
     - Remove the calendar_config file
-
-- Make mpd work
