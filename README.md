@@ -64,7 +64,3 @@ polybar example
 ```
 sudo apt install fonts-font-awesome
 ```
-
-## ToDO List
-- Modify the calendar script in the polybar config file
-    - Remove the calendar_config file
