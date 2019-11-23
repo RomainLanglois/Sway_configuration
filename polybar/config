@@ -175,15 +175,14 @@ bar-used-empty-foreground = #444444
 
 [module/mpd]
 type = internal/mpd
-format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
+format-online = <icon-prev> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
 
 icon-play = 
 icon-pause = 
-icon-stop = 
 icon-prev = 
 icon-next = 
 icon-random = 
-icon-repeat = 
+icon-repeat = 
 
 toggle-on-foreground =
 toggle-off-foreground = #55
@@ -217,7 +216,7 @@ type = internal/network
 interface = enp1s0
 interval = 3.0
 
-label-connected =    %{T3}%local_ip%%{T-}
+label-connected =    %{T3}%local_ip%%{T-}
 label-disconnected-foreground = #66
 
 [module/alsa]
@@ -227,7 +226,7 @@ format-volume = <label-volume> <bar-volume>
 label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
-format-muted-prefix = " "
+format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-alt}
 label-muted = sound muted
 
