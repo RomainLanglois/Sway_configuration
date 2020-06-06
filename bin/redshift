@@ -1,0 +1,2 @@
+pkill redshift
+redshift -l 49.47:1.05
