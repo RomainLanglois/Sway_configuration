@@ -10,4 +10,5 @@ while [ $i -lt $(( size -1 )) ]; do
     i=$(( i + 1 ))
 done
 ip=$(ip addr show "${array[$i]}" | sed -nE 's,inet\s(([[:digit:]]\.?)+).*,\1,p')
-printf "%s(%s)" "${array[$i]}" $ip
+#printf "%s(%s)" "${array[$i]}" $ip
+echo $ip
