@@ -187,8 +187,8 @@ set $ce     #ceecee
 # start application
 exec --no-startup-id feh --bg-fill ~/.config/i3/background.bmp
 exec --no-startup-id conky -d -c ~/.config/i3/conky-right
-exec --no-startup-id conky -d -c ~/.config/i3/conky-left
-exec --no-startup-id xautolock -time 5 -locker 'i3lock -f -i ~/Pictures/fury.png -t'
+#exec --no-startup-id conky -d -c ~/.config/i3/conky-left
+exec --no-startup-id xautolock -corners 0-00 -time 5 -locker 'i3lock -f -i ~/Pictures/fury.png -t'
 exec --no-startup-id nm-applet
 
 
