@@ -19,16 +19,12 @@ usage ()
 
 mount_usb_key ()
 {
-	sudo /bin/mkdir /media/device_$1
-	sudo /bin/mount /dev/$1 /media/device_$1
-	/bin/echo -e "${GREEN} Device mounted"
+	sudo /bin/mkdir /media/device_$1 && sudo /bin/mount /dev/$1 /media/device_$1 && /bin/echo -e "${GREEN} Device mounted"
 }
 
 umount_usb_key ()
 {
-	sudo /bin/umount /media/device_$1 && /bin/sync
-	sudo /bin/rm -rf /media/device_$1
-	/bin/echo -e "${GREEN} Device demonted"
+	sudo /bin/sync && sudo /bin/umount /media/device_$1 && sudo /bin/rmdir /media/device_$1 && /bin/echo -e "${GREEN} Device demonted"
 }
 
 usage $option $device
