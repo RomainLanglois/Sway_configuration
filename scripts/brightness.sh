@@ -1,27 +1,16 @@
 #!/bin/bash
 
-function main() {
-    local file_brightness='/sys/class/backlight/intel_backlight/brightness'
-    local file_max='/sys/class/backlight/intel_backlight/max_brightness'
-    local cur=$(cat "$file_brightness")
-    local max=$(cat "$file_max")
+brightness_file=/sys/class/backlight/intel_backlight/brightness
+brightness_value=$(/bin/cat /sys/class/backlight/intel_backlight/brightness)
 
-    if [ ! -w "$file_brightness" ]; then
-        echo "Can't set the new brightness, try with sudo or as root."
-        exit 2
-    fi
-
-    new=$(($cur $1 $2))
-    new=$(($new>$max?$max:$new))
-    new=$(($new<0?0:$new))
-    echo $new > "$file_brightness"
-    echo "New brightness: $new/$max."
-}
-
-if [[ -z "$1" || -z "$2" ]]; then
-    echo "Usage: brightness <-|+> <delta>"
-    exit 1
+if [[ $1 == "+" ]]
+then
+	brightness_value=$(( brightness_value + 100 ))
+	/bin/echo $brightness_value | /usr/bin/sudo /usr/bin/tee $brightness_file
+elif [[ $1 == "-" ]]
+then
+	brightness_value=$(( brightness_value - 100 ))
+	/bin/echo $brightness_value | /usr/bin/sudo /usr/bin/tee $brightness_file
+else
+	/bin/echo "[*] Wrong value"
 fi
-
-main $1 $2
-
