@@ -169,25 +169,23 @@ bindsym XF86AudioRaiseVolume exec "amixer set Master unmute; amixer -c 0 set Mas
 bindsym XF86AudioLowerVolume exec "amixer set Master unmute; amixer -c 0 set Master 1dB-" 
 
 # Brightness 
-bindsym XF86MonBrightnessDown exec sudo ~/.config/i3/scripts/brightness.sh - 500 
-bindsym XF86MonBrightnessUp exec sudo ~/.config/i3/scripts/brightness.sh + 500 
+bindsym XF86MonBrightnessDown exec sudo /bin/brightness.sh - 
+bindsym XF86MonBrightnessUp exec sudo /bin/brightness.sh +
 
 # Background image 
-# Systemd voir avec systemctl
-exec --no-startup-id feh --bg-max ~/.config/i3/backgrounds/wallpaper.png &
+exec --no-startup-id feh --bg-max ~/.config/i3/backgrounds/fury.png &
 
 # Lock screen
-set $Locker i3lock -i ~/.config/i3/backgrounds/lockscreen.png -t && sleep 1 
-set $xautoLocker "i3lock -i ~/.config/i3/backgrounds/lockscreen.png -e -t && sleep 1" 
-exec --no-startup-id xautolock -detectsleep -time 10 -locker $xautoLocker &
-bindsym $mod+l exec --no-startup-id $Locker, mode "default"     
+set $locker "i3lock -f -i ~/.config/i3/backgrounds/fury.png -t && sleep 1"
+exec --no-startup-id xautolock -detectsleep -time 10 -locker $locker &
+bindsym $mod+l exec --no-startup-id $locker, mode "default"     
 
 
 set $mode_system (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown 
 mode "$mode_system" {     
 	bindsym e exec --no-startup-id i3-msg exit, mode "default"     
-	bindsym s exec --no-startup-id $Locker && loginctl suspend, mode "default"     
-	bindsym h exec --no-startup-id $Locker && loginctl hibernate, mode "default"     
+	bindsym s exec --no-startup-id $locker && loginctl suspend, mode "default"     
+	bindsym h exec --no-startup-id $locker && loginctl hibernate, mode "default"     
 	bindsym r exec --no-startup-id loginctl reboot, mode "default"     
 	bindsym Shift+s exec --no-startup-id loginctl poweroff -i, mode "default"      
 
@@ -200,6 +198,18 @@ bindsym $mod+Shift+s mode "$mode_system"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks -c ~/.config/i3/i3blocks/config
 }
 
+# ----------------------------------------
+# ----------------------------------------
+# WIP
+# Application shortcut
+## Calling applications the standard way
+bindsym $mod+Shift+f exec firefox-bin
+#bindsym $mod+Shift+e exec evince
+## Calling the applications using a sandbox
+#bindsym $mod+s+f exec sandbox_firefox.sh
+#bindsym $mod+s+e exec sandbox_evince.sh
+# ----------------------------------------
+# ----------------------------------------
