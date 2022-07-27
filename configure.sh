@@ -1,58 +1,62 @@
 #!/bin/bash
 
-# Notes
-# Script de configuration de l environnement I3 -> Pas d'installation
-# Architecture du dossier i3
-# -> scripts
-# 	-> usb_handler.sh
-#	-> brightness.sh
-#	-> Convert_OVA_VMDK_TO_QCOW2.sh
-#	-> Autres
-# -> backgrounds
-#	-> fury.png
-# -> zsh
-# 	-> zshrc
-# 	-> zsh-syntax-highlighting.zsh
-#	-> zsh-autosuggestions.zsh
-# -> README.md
-# -> config
-# -> xinitrc
-# -> i3blocks
-#	-> TODO
-# -> configure.sh
+if [[ "$EUID" -ne 0 ]];
+  then
+  /bin/echo "[*] Please run this script as root"
+  exit 1
+fi
 
-# TODO
-	# Préparer le répo Gihub i3 config
-	# Config i3blocks
-
-i3_config_folder=~/.config/i3/
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No colors
 share_folder=/usr/share
-folders_array=(
-	"~/.config"
-	"~/.config/i3"
-	"$share_folder/zsh-syntax-highlighting"
-	"$share_folder/zsh-autosuggestions"
-)
+echo "[?] Please enter the username who will receive this XORG configuration"
+read username
+username_home_folder=/home/$username
+i3_config_folder=/home/$username/.config/i3
 
 /bin/echo "###########################################"
 /bin/echo "[*] Configuring i3"
-for folder in ${folders_array[@]};
-do
-	if [[ ! -d $folder ]]
-	then
-		/bin/mkdir $folder || /usr/bin/sudo /bin/mkdir $folder
-		echo "[*] $folder has been created !"
-	fi
-done
-/bin/cp xinitrc ~/.xinitrc && \
+if [[ ! -d $i3_config_folder ]]
+then
+	/bin/mkdir $i3_config_folder && \
+	echo -e "${GREEN}[*] $i3_config_folder folder has been created !${NC}"
+fi
+/bin/cp xinitrc $username_home_folder/.xinitrc && \
 /bin/cp config $i3_config_folder && \
+/bin/cp zsh/zshrc $username_home_folder/.zshrc && \
 /bin/cp -r backgrounds $i3_config_folder && \
+/bin/cp -r i3blocks $i3_config_folder && \
 /bin/cp -r scripts $i3_config_folder && \
-/usr/bin/sudo /bin/cp scripts/usb_handler.sh scripts/brightness.sh /bin && \
-/usr/bin/sudo /bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh && \
-/usr/bin/sudo /bin/echo "$(whoami) ALL=(ALL) NOPASSWD: /bin/brigthtness.sh" >> /etc/sudoers && \
-/bin/cp zsh/zshrc ~/.zshrc
-/usr/bin/sudo /bin/cp zsh/zsh-syntax-highlighting.zsh share_folder/zsh-syntax-highlighting && \
-/usr/bin/sudo /bin/cp zsh/zsh-autosuggestions.zsh $share_folder/zsh-autosuggestions && \
+/bin/cp scripts/usb_handler.sh scripts/brightness.sh /bin && \
+/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh && \
+/bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brigthtness.sh" >> /etc/sudoers && \
+/bin/chown $username:$username -R $i3_config_folder && \
+/bin/chown $username:$username $username_home_folder/.xinitrc $username_home_folder/.zshrc && \
+/bin/echo -e "${GREEN}[*] Done ! ${NC}"
+
+if [[ ! -d $share_folder/zsh-syntax-highlighting ]]
+then
+	/usr/bin/sudo /bin/mkdir $share_folder/zsh-syntax-highlighting && \
+	/bin/echo -e "${GREEN}[*] $share_folder/zsh-syntax-highlighting folder has been created !${NC}"
+fi
+/bin/cp zsh/zsh-syntax-highlighting.zsh $share_folder/zsh-syntax-highlighting && \
+/bin/cp zsh/highlighters.zip $share_folder/zsh-syntax-highlighting && \
+/usr/bin/unzip $share_folder/zsh-syntax-highlighting/highlighters.zip -d $share_folder/zsh-syntax-highlighting && \
+/bin/rm $share_folder/zsh-syntax-highlighting/highlighters.zip && \
+touch $share_folder/zsh-syntax-highlighting/.version && \
+touch $share_folder/zsh-syntax-highlighting/.revision-hash && \
+/bin/chmod 755 -R /usr/share/zsh-syntax-highlighting && \
+/bin/echo -e "${GREEN}[*] Done ! ${NC}"
+
+if [[ ! -d $share_folder/zsh-autosuggestions ]]
+then
+	/bin/mkdir $share_folder/zsh-autosuggestions
+	/bin/echo -e "${GREEN}[*] $share_folder/zsh-autosuggestions has been created ! ${NC}"
+fi
+/bin/cp zsh/zsh-autosuggestions.zsh $share_folder/zsh-autosuggestions && \
+/bin/chmod 755 -R /usr/share/zsh-autosuggestions && \
+/bin/sed -i "s#$username:x:1000:1000::/home/$username:/bin/bash#$username:x:1000:1000::/home/$username:/bin/zsh#g" /etc/passwd && \
 /bin/echo "[*] Done !"
 /bin/echo "###########################################"
+
