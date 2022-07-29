@@ -13,6 +13,8 @@ share_folder=/usr/share
 echo "[?] Please enter the username who will receive this XORG configuration"
 read username
 username_home_folder=/home/$username
+username_id=$(id -u $username)
+username_group_id=$(id -g $username)
 i3_config_folder=/home/$username/.config/i3
 
 /bin/echo "###########################################"
@@ -28,8 +30,8 @@ fi
 /bin/cp -r backgrounds $i3_config_folder && \
 /bin/cp -r i3blocks $i3_config_folder && \
 /bin/cp -r scripts $i3_config_folder && \
-/bin/cp scripts/usb_handler.sh scripts/brightness.sh /bin && \
-/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh && \
+/bin/cp scripts/usb_handler.sh scripts/brightness.sh scripts/Convert_OVA_VMDK_TO_QCOW2.sh /bin && \
+/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/Convert_OVA_VMDK_TO_QCOW2.sh && \
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brigthtness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $i3_config_folder && \
 /bin/chown $username:$username $username_home_folder/.xinitrc $username_home_folder/.zshrc && \
@@ -44,8 +46,8 @@ fi
 /bin/cp zsh/highlighters.zip $share_folder/zsh-syntax-highlighting && \
 /usr/bin/unzip $share_folder/zsh-syntax-highlighting/highlighters.zip -d $share_folder/zsh-syntax-highlighting && \
 /bin/rm $share_folder/zsh-syntax-highlighting/highlighters.zip && \
-touch $share_folder/zsh-syntax-highlighting/.version && \
-touch $share_folder/zsh-syntax-highlighting/.revision-hash && \
+/usr/bin/touch $share_folder/zsh-syntax-highlighting/.version && \
+/usr/bin/touch $share_folder/zsh-syntax-highlighting/.revision-hash && \
 /bin/chmod 755 -R /usr/share/zsh-syntax-highlighting && \
 /bin/echo -e "${GREEN}[*] Done ! ${NC}"
 
@@ -56,7 +58,6 @@ then
 fi
 /bin/cp zsh/zsh-autosuggestions.zsh $share_folder/zsh-autosuggestions && \
 /bin/chmod 755 -R /usr/share/zsh-autosuggestions && \
-/bin/sed -i "s#$username:x:1000:1000::/home/$username:/bin/bash#$username:x:1000:1000::/home/$username:/bin/zsh#g" /etc/passwd && \
+/bin/sed -i "s#$username:x:$username_id:$username_group_id::/home/$username:/bin/bash#$username:x:$username_id:$username_group_id::/home/$username:/bin/zsh#g" /etc/passwd && \
 /bin/echo "[*] Done !"
 /bin/echo "###########################################"
-
