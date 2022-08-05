@@ -6,10 +6,30 @@ if [[ "$EUID" -ne 0 ]];
   exit 1
 fi
 
+program_array=(
+	"media-fonts/fontawesome"
+	"sys-power/acpi"
+	"app-admin/sysstat"
+	"x11-misc/rofi"
+	)
+
+# Check if program is installed, if not install it
+for program in ${program_array[@]}; do
+	if [[ $(emerge -p $program | grep -i "ebuild  N") ]]
+	then
+		/bin/echo "[*] $program is not installed, going for installation..." && \
+		emerge -q $program && \
+		/bin/echo -e "${GREEN}[*] Done ! ${NC}"
+	else
+		/bin/echo -e "${GREEN}[*] $program is already installed !${NC}"
+	fi
+done
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No colors
 share_folder=/usr/share
+
 echo "[?] Please enter the username who will receive this XORG configuration"
 read username
 username_home_folder=/home/$username
@@ -29,9 +49,11 @@ fi
 /bin/cp zsh/zshrc $username_home_folder/.zshrc && \
 /bin/cp -r backgrounds $i3_config_folder && \
 /bin/cp -r i3blocks $i3_config_folder && \
-/bin/cp -r scripts $i3_config_folder && \
-/bin/cp scripts/usb_handler.sh scripts/brightness.sh scripts/Convert_OVA_VMDK_TO_QCOW2.sh /bin && \
+/bin/cp -r bin_scripts $i3_config_folder && \
+/bin/cp -r i3blocks $i3_config_folder && \
+/bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/Convert_OVA_VMDK_TO_QCOW2.sh /bin && \
 /bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/Convert_OVA_VMDK_TO_QCOW2.sh && \
+/bin/chmod 755 -R $i3_config_folder/i3blocks/scripts
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brigthtness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $i3_config_folder && \
 /bin/chown $username:$username $username_home_folder/.xinitrc $username_home_folder/.zshrc && \
