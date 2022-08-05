@@ -1,21 +1,124 @@
-[click]
-full_text=Click me!
-command=echo "Got clicked with button $button"
-color=#F79494
-
-# Guess the weather hourly
-#[weather]
-#command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
-#interval=3600
-#color=#A4C2F4
-
 # Query my default IP address only on startup
-[ip]
-command=hostname -i | awk '{ print "IP:" $1 }'
-interval=once
-color=#91E78B
+[iface]
+command=~/.config/i3/i3blocks/scripts/iface
+LABEL=enp0s31f6:
+#ADDRESS_FAMILY=inet6?
+color=#00FF00
+interval=10
+# set this to 1 to display the name of the connected WIFI interface instead of the IP address.
+display_wifi_name=0
+
+[bandwidth]
+command=~/.config/i3/i3blocks/scripts/bandwidth
+interval=persist
+markup=pango
+LABEL=Bandwidth: 
+#LABEL=<span font='FontAwesome'>  </span>
+#IFACE=[automatically determined]
+#DT=3
+#UNIT=Mb
+# Exposed variables: rx, wx, tx, unit, iface
+#PRINTF_COMMAND=printf "${LABEL}%-5.1f/%5.1f %s/s\n", rx, wx, unit;
+
+[cpu_usage]
+command=~/.config/i3/i3blocks/scripts/cpu_usage
+LABEL=CPU: 
+interval=10
+#min_width=CPU: 100.00%
+#T_WARN=50
+#T_CRIT=80
+#DECIMALS=2
+#COLOR_NORMAL=#EBDBB2
+#COLOR_WARN=#FFFC00
+#COLOR_CRIT=#FF0000
+
+[memory]
+command=~/.config/i3/i3blocks/scripts/memory
+label=RAM: 
+interval=30
+
+[disk]
+command=~/.config/i3/i3blocks/scripts/disk
+LABEL=/: 
+DIR=/
+interval=30
+
+[disk]
+command=~/.config/i3/i3blocks/scripts/disk
+LABEL=/home: 
+DIR=/home
+interval=30
+
+[disk-io]
+command=~/.config/i3/i3blocks/scripts/disk-io
+#command=$SCRIPT_DIR/disk-io -w 3 -M -P 0
+interval=persist
+markup=pango
+LABEL= 
+#instance=/^sda/
+#DT=5
+#MB_ONLY=0 #0 or 1
+#KB_ONLY=0 #0 or 1
+#WIDTH=4
+#MB_PRECISION=1
+#KB_PRECISION=0
+#REGEX=/^(s|h)d[a-zA-Z]+/
+#THRESHOLD=0
+#WARN_COLOR="#FF0000"
+#SEPARATOR=/
+#PREFIX=
+#SUFFIX="B/s"
+
+[volume]
+command=~/.config/i3/i3blocks/scripts/volume
+#LABEL=♪  
+LABEL=Volume:  
+interval=5
+signal=10
+#STEP=5%
+#MIXER=[determined automatically]
+#SCONTROL=[determined automatically]
+#NATURAL_MAPPING=0
+
+[batterybar]
+command=~/.config/i3/i3blocks/scripts/batterybar
+label=Battery: 
+interval=5
+markup=pango
+min_width=bat: ■■■■■
+# Discharging colors low to high
+#C1=#FF0027
+#C2=#FF3B05
+#C3=#FFB923
+#C4=#FFD000
+#C5=#E4FF00
+#C6=#ADFF00
+#C7=#6DFF00
+#C8=#10BA00
+#CHARGING_COLOR=#00AFE3
+#FULL_COLOR=#FFFFFF
+#AC_COLOR=#535353
+
+[backlight]
+command=/bin/brightness.sh
+label=Backlight: 
+interval=5
 
 # Update time every 5 seconds
 [time]
-command=date +%T
+command=date -u +%H:%M
 interval=5
+
+[rofi-calendar]
+command=~/.config/i3/i3blocks/scripts/rofi-calendar
+interval=3600
+#BAR_POSITION=bottom
+#WEEK_START=monday
+#DATEFTM=+%a %d %b %Y
+#SHORTFMT=+%d/%m/%Y
+#LABEL= 
+#FONT=Monospace 10
+#LEFTCLICK_PREV_MONTH=false
+#PREV_MONTH_TEXT=« previous month «
+#NEXT_MONTH_TEXT=» next month »
+#ROFI_CONFIG_FILE=/dev/null
