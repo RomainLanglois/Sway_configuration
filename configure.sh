@@ -54,7 +54,7 @@ fi
 /bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/Convert_OVA_VMDK_TO_QCOW2.sh /bin && \
 /bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/Convert_OVA_VMDK_TO_QCOW2.sh && \
 /bin/chmod 755 -R $i3_config_folder/i3blocks/scripts
-/bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brigthtness.sh" >> /etc/sudoers && \
+/bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $i3_config_folder && \
 /bin/chown $username:$username $username_home_folder/.xinitrc $username_home_folder/.zshrc && \
 /bin/echo -e "${GREEN}[*] Done ! ${NC}"
