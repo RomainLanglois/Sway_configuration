@@ -6,13 +6,20 @@ NC='\033[0m' # No colors
 
 option=$1
 device=$2
+user_id=$(/usr/bin/id -u)
+user_group_id=$(/usr/bin/id -g)
+
 
 if [[ $option ]]
 then
 	if [[ $option == "mount" && $device ]];
 	then
+		if [[ -d /media/device_$device ]]
+		then
+			 /usr/bin/sudo /bin/rmdir /media/device_$device
+		fi
 		/usr/bin/sudo /bin/mkdir /media/device_$device && \
-		/usr/bin/sudo /bin/mount /dev/$device /media/device_$device && \
+		/usr/bin/sudo /bin/mount -o umask=0022,gid=$user_group_id,uid=$user_id /dev/$device /media/device_$device && \
 		/bin/echo -e "${GREEN}[*] Device mounted ${NC}"
 	elif [[ $option == "umount" && $device ]];
 	then
