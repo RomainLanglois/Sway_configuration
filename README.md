@@ -1,1 +1,1 @@
-# My i3 configurations files
+# My Sway configuration files
