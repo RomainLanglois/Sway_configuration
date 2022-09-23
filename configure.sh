@@ -6,11 +6,15 @@ if [[ "$EUID" -ne 0 ]];
   exit 1
 fi
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No colors
+share_folder=/usr/share
+
 program_array=(
 	"media-fonts/fontawesome"
 	"sys-power/acpi"
 	"app-admin/sysstat"
-	"x11-misc/rofi"
 	)
 
 # Check if program is installed, if not install it
@@ -25,37 +29,31 @@ for program in ${program_array[@]}; do
 	fi
 done
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No colors
-share_folder=/usr/share
-
 echo "[?] Please enter the username who will receive this XORG configuration"
 read username
 username_home_folder=/home/$username
 username_id=$(id -u $username)
 username_group_id=$(id -g $username)
-i3_config_folder=/home/$username/.config/i3
+sway_config_folder=/home/$username/.config/sway
 
 /bin/echo "###########################################"
-/bin/echo "[*] Configuring i3"
-if [[ ! -d $i3_config_folder ]]
+/bin/echo "[*] Configuring Sway"
+if [[ ! -d $sway_config_folder ]]
 then
-	/bin/mkdir $i3_config_folder && \
-	echo -e "${GREEN}[*] $i3_config_folder folder has been created !${NC}"
+	/bin/mkdir $sway_config_folder && \
+	echo -e "${GREEN}[*] $sway_config_folder folder has been created !${NC}"
 fi
-/bin/cp xinitrc $username_home_folder/.xinitrc && \
-/bin/cp config $i3_config_folder && \
+/bin/cp config $sway_config_folder && \
 /bin/cp zsh/zshrc $username_home_folder/.zshrc && \
-/bin/cp -r backgrounds $i3_config_folder && \
-/bin/cp -r i3blocks $i3_config_folder && \
-/bin/cp -r bin_scripts $i3_config_folder && \
-/bin/cp -r i3blocks $i3_config_folder && \
+/bin/cp -r backgrounds $sway_config_folder && \
+/bin/cp -r swaybar $sway_config_folder && \
+/bin/cp -r bin_scripts $sway_config_folder && \
+/bin/cp -r swaybar $sway_config_folder && \
 /bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/Convert_OVA_VMDK_TO_QCOW2.sh /bin && \
 /bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/Convert_OVA_VMDK_TO_QCOW2.sh && \
-/bin/chmod 755 -R $i3_config_folder/i3blocks/scripts
+/bin/chmod 755 -R $sway_config_folder/swaybar/scripts
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
-/bin/chown $username:$username -R $i3_config_folder && \
+/bin/chown $username:$username -R $sway_config_folder && \
 /bin/chown $username:$username $username_home_folder/.xinitrc $username_home_folder/.zshrc && \
 /bin/echo -e "${GREEN}[*] Done ! ${NC}"
 
