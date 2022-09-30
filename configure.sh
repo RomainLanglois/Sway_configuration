@@ -29,7 +29,7 @@ for program in ${program_array[@]}; do
 	fi
 done
 
-echo "[?] Please enter the username who will receive this XORG configuration"
+echo "[?] Please enter the username who will receive the Wayland configuration"
 read username
 username_home_folder=/home/$username
 username_id=$(id -u $username)
@@ -49,12 +49,12 @@ fi
 /bin/cp -r swaybar $sway_config_folder && \
 /bin/cp -r bin_scripts $sway_config_folder && \
 /bin/cp -r swaybar $sway_config_folder && \
-/bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/Convert_OVA_VMDK_TO_QCOW2.sh /bin && \
-/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/Convert_OVA_VMDK_TO_QCOW2.sh && \
-/bin/chmod 755 -R $sway_config_folder/swaybar/scripts
+/bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/convert_to_qcow2.sh /bin && \
+/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/convert_to_qcow2.sh.sh && \
+/bin/chmod 755 -R $sway_config_folder/swaybar/scripts && \
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $sway_config_folder && \
-/bin/chown $username:$username $username_home_folder/.xinitrc $username_home_folder/.zshrc && \
+/bin/chown $username:$username $username_home_folder/.zshrc && \
 /bin/echo -e "${GREEN}[*] Done ! ${NC}"
 
 if [[ ! -d $share_folder/zsh-syntax-highlighting ]]
@@ -74,7 +74,7 @@ fi
 if [[ ! -d $share_folder/zsh-autosuggestions ]]
 then
 	/bin/mkdir $share_folder/zsh-autosuggestions
-	/bin/echo -e "${GREEN}[*] $share_folder/zsh-autosuggestions has been created ! ${NC}"
+	/bin/echo -e "${GREEN}[*] $share_folder/zsh-autosuggestions folder has been created ! ${NC}"
 fi
 /bin/cp zsh/zsh-autosuggestions.zsh $share_folder/zsh-autosuggestions && \
 /bin/chmod 755 -R /usr/share/zsh-autosuggestions && \
