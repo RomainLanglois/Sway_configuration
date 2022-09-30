@@ -18,5 +18,5 @@ then
 	brightness_value=$(($brightness_value - ($max_brightness*10/100)))
 	/bin/echo $brightness_value | /usr/bin/sudo /usr/bin/tee $brightness_file
 else
-	/bin/echo $(($brightness_value*100/852))'%'
+	/bin/echo 'Brightness: '$(($brightness_value*100/$max_brightness))'%'
 fi
