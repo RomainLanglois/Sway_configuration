@@ -31,6 +31,11 @@ done
 
 echo "[?] Please enter the username who will receive the Wayland configuration"
 read username
+if [[ ! $(/bin/cat /etc/passwd | cut -d ":" -f1 | /bin/grep $username) ]]
+then
+	/bin/echo -e "${RED}The username provided does not exist ! Exiting...${NC}" && \
+	exit 1
+fi
 username_home_folder=/home/$username
 username_id=$(id -u $username)
 username_group_id=$(id -g $username)
@@ -50,7 +55,7 @@ fi
 /bin/cp -r bin_scripts $sway_config_folder && \
 /bin/cp -r swaybar $sway_config_folder && \
 /bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/convert_to_qcow2.sh /bin && \
-/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/convert_to_qcow2.sh.sh && \
+/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/convert_to_qcow2.sh && \
 /bin/chmod 755 -R $sway_config_folder/swaybar/scripts && \
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $sway_config_folder && \
