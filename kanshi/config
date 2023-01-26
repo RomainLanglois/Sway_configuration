@@ -1,0 +1,10 @@
+# man sway-output
+# https://sr.ht/~emersidgfon/kanshi/
+profile {
+	output eDP-1 enable scale 1 mode 1920x1080 position 1920,0
+}
+
+profile {
+	output eDP-1 enable scale 1 mode 1920x1080 position 1920,0
+	output "Philips Consumer Electronics Company Philips 226VL UHB1140036491" mode 1920x1080 position 0,0
+}
