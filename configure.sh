@@ -31,11 +31,6 @@ done
 
 echo "[?] Please enter the username who will receive the Wayland configuration"
 read username
-if [[ ! $(/bin/cat /etc/passwd | cut -d ":" -f1 | /bin/grep $username) ]]
-then
-	/bin/echo -e "${RED}The username provided does not exist ! Exiting...${NC}" && \
-	exit 1
-fi
 username_home_folder=/home/$username
 username_id=$(id -u $username)
 username_group_id=$(id -g $username)
@@ -60,6 +55,9 @@ fi
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $sway_config_folder && \
 /bin/chown $username:$username $username_home_folder/.zshrc && \
+/bin/su - $username -c "/usr/bin/pip3 install --user psutil" && \
+/bin/mkdir -p /home/$username/.config/kanshi && \
+/usr/bin/wget https://github.com/RomainLanglois/Sway_configuration/kanshi/config -O /home/$username/.config/kanshi/config && \
 /bin/echo -e "${GREEN}[*] Done ! ${NC}"
 
 if [[ ! -d $share_folder/zsh-syntax-highlighting ]]
