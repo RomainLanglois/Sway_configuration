@@ -18,7 +18,7 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu bemenu-run
 # Set keyboard layout
 input * xkb_layout "fr"
 # setup auto numlock
@@ -213,7 +213,6 @@ bindsym XF86MonBrightnessUp exec sudo /bin/brightness.sh +
 set $locker "swaylock -k -F -i ~/.config/sway/backgrounds/fury.png -t && sleep 1"
 #exec --no-startup-id xautolock -detectsleep -time 10 -locker $locker &
 bindsym $mod+Shift+u exec --no-startup-id $locker, mode "default"     
-
 
 set $mode_system (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown 
 mode "$mode_system" {     
