@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -214,9 +214,12 @@ set $locker "swaylock -k -F -i ~/.config/sway/backgrounds/fury.png -t && sleep 1
 #exec --no-startup-id xautolock -detectsleep -time 10 -locker $locker &
 bindsym $mod+Shift+u exec --no-startup-id $locker, mode "default"     
 
+# Execute scripts at startup
+exec_always --no-startup-id /usr/bin/kanshi
+
 set $mode_system (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown 
 mode "$mode_system" {     
-	bindsym e exec --no-startup-id i3-msg exit, mode "default"     
+	bindsym e exec --no-startup-id swaymsg exit, mode "default"
 	bindsym s exec --no-startup-id $locker && loginctl suspend, mode "default"     
 	bindsym h exec --no-startup-id $locker && loginctl hibernate, mode "default"     
 	bindsym r exec --no-startup-id loginctl reboot, mode "default"     
