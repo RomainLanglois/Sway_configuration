@@ -1,14 +1,16 @@
 #!/bin/bash
 
+set -e
+
 if [[ "$EUID" -ne 0 ]];
   then
   /bin/echo "[*] Please run this script as root"
   exit 1
 fi
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No colors
+RED='\e[31m'
+GREEN='\e[32m'
+NC='\e[0m' # No colors
 share_folder=/usr/share
 
 program_array=(
@@ -49,8 +51,8 @@ fi
 /bin/cp -r swaybar $sway_config_folder && \
 /bin/cp -r bin_scripts $sway_config_folder && \
 /bin/cp -r swaybar $sway_config_folder && \
-/bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/convert_to_qcow2.sh /bin && \
-/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/convert_to_qcow2.sh && \
+/bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/convert_to_qcow2.sh bin_scripts/veracrypt_handler.sh /bin && \
+/bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/convert_to_qcow2.sh /bin/veracrypt_handler.sh && \
 /bin/chmod 755 -R $sway_config_folder/swaybar/scripts && \
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $sway_config_folder && \
