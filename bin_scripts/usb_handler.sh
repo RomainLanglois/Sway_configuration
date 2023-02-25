@@ -2,12 +2,13 @@
 
 set -e
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No colors
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+NC='\e[0m' # No colors
 
 option=$1
-device=$2
+device=${2##*/}
 user_id=$(/usr/bin/id -u)
 user_group_id=$(/usr/bin/id -g)
 
@@ -18,7 +19,7 @@ then
 	then
 		if [[ $(/usr/bin/sudo /usr/bin/file -sL /dev/$device | /bin/grep -i "LUKS encrypted file") ]];
 		then
-			/bin/echo "[*] Luks format partition detected !"
+			/bin/echo -e "${YELLOW}[!] Luks format partition detected !${NC}"
 			/usr/bin/sudo /sbin/cryptsetup luksOpen /dev/$device decrypted_$device && \
 			/usr/bin/sudo /bin/mkdir /media/decrypted_$device && \
 			/usr/bin/sudo /bin/mount /dev/mapper/decrypted_$device /media/decrypted_$device && \
@@ -32,7 +33,7 @@ then
 	then
 		if [[ $(/usr/bin/sudo /usr/bin/file -sL /dev/$device | /bin/grep -i "LUKS encrypted file") ]];
 		then
-			/bin/echo "[*] Luks format partition detected !"
+			/bin/echo -e "${YELLOW}[!] Luks format partition detected !${NC}"
 			/usr/bin/sudo /bin/umount /media/decrypted_$device && \
 			/usr/bin/sudo /sbin/cryptsetup close /dev/mapper/decrypted_$device && \
 			/usr/bin/sudo /bin/rmdir /media/decrypted_$device && \
@@ -59,5 +60,6 @@ then
 	fi
 else
         /bin/echo -e "${RED}[*] Usage:"
-        /bin/echo -e "  $0 <verb> ${NC}"
+        /bin/echo -e "  [*] $0 <option> <device>"
+	/bin/echo -e "  [*] $0 mount /dev/sdb1${NC}"
 fi
