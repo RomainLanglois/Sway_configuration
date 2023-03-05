@@ -10,6 +10,7 @@ fi
 
 RED='\e[31m'
 GREEN='\e[32m'
+YELLOW='\e[33m'
 NC='\e[0m' # No colors
 share_folder=/usr/share
 
@@ -23,7 +24,7 @@ program_array=(
 for program in ${program_array[@]}; do
 	if [[ $(emerge -p $program | grep -i "ebuild  N") ]]
 	then
-		/bin/echo "[*] $program is not installed, going for installation..." && \
+		/bin/echo -e "${YELLOW}[*] $program is not installed, going for installation...${NC}" && \
 		emerge -q $program && \
 		/bin/echo -e "${GREEN}[*] Done ! ${NC}"
 	else
@@ -31,7 +32,7 @@ for program in ${program_array[@]}; do
 	fi
 done
 
-echo "[?] Please enter the username who will receive the Wayland configuration"
+/bin/echo -e "${YELLOW}[?] Please enter the username who will receive the Wayland configuration${NC}"
 read username
 username_home_folder=/home/$username
 username_id=$(id -u $username)
@@ -39,7 +40,7 @@ username_group_id=$(id -g $username)
 sway_config_folder=/home/$username/.config/sway
 
 /bin/echo "###########################################"
-/bin/echo "[*] Configuring Sway"
+/bin/echo -e "${YELLOW}[*] Configuring Sway${NC}"
 if [[ ! -d $sway_config_folder ]]
 then
 	/bin/mkdir $sway_config_folder && \
@@ -62,6 +63,7 @@ fi
 /usr/bin/wget https://github.com/RomainLanglois/Sway_configuration/kanshi/config -O /home/$username/.config/kanshi/config && \
 /bin/echo -e "${GREEN}[*] Done ! ${NC}"
 
+/bin/echo -e "${YELLOW}[*] Configuring ZSH${NC}"
 if [[ ! -d $share_folder/zsh-syntax-highlighting ]]
 then
 	/usr/bin/sudo /bin/mkdir $share_folder/zsh-syntax-highlighting && \
@@ -84,5 +86,18 @@ fi
 /bin/cp zsh/zsh-autosuggestions.zsh $share_folder/zsh-autosuggestions && \
 /bin/chmod 755 -R /usr/share/zsh-autosuggestions && \
 /bin/sed -i "s#$username:x:$username_id:$username_group_id::/home/$username:/bin/bash#$username:x:$username_id:$username_group_id::/home/$username:/bin/zsh#g" /etc/passwd && \
-/bin/echo "[*] Done !"
+/bin/echo -e "${GREEN}[*] Done !${NC}"
+
+/bin/echo -e "${YELLOW}[*] Configuring VIM${NC}"
+/bin/mkdir -p $username_home_folder/.vim $username_home_folder/.vim/autoload $username_home_folder/.vim/backup $username_home_folder/.vim/colors $username_home_folder/.vim/plugged && \
+/bin/mkdir -p /root/.vim /root/.vim/autoload /root/.vim/backup /root/.vim/colors /root/.vim/plugged && \
+/bin/cp vim/vimrc $username_home_folder/.vimrc /root/.vimrc && \
+/usr/bin/curl -fLo $username_home_folder/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+/usr/bin/curl -fLo /root/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+/usr/bin/curl -o $username_home_folder/.vim/colors/molokai.vim https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim && \
+/usr/bin/curl -o /root/.vim/colors/molokai.vim https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim && \
+/usr/bin/vim -c 'PlugInstall --sync' -c qa && \ 
+/usr/bin/sudo -H -u $username /bin/bash -c "/usr/bin/vim -c 'PlugInstall --sync' -c qa" && \ 
+/bin/echo -e "${GREEN}[*] Done !${NC}"
 /bin/echo "###########################################"
+
