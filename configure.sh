@@ -49,12 +49,10 @@ fi
 /bin/cp config $sway_config_folder && \
 /bin/cp zsh/zshrc $username_home_folder/.zshrc && \
 /bin/cp -r backgrounds $sway_config_folder && \
-/bin/cp -r swaybar $sway_config_folder && \
 /bin/cp -r bin_scripts $sway_config_folder && \
-/bin/cp -r swaybar $sway_config_folder && \
+/bin/cp -r waybar $username_home_folder/.config/ && \
 /bin/cp bin_scripts/usb_handler.sh bin_scripts/brightness.sh bin_scripts/convert_to_qcow2.sh bin_scripts/veracrypt_handler.sh /bin && \
 /bin/chmod +x /bin/usb_handler.sh /bin/brightness.sh /bin/convert_to_qcow2.sh /bin/veracrypt_handler.sh && \
-/bin/chmod 755 -R $sway_config_folder/swaybar/scripts && \
 /bin/echo "$username ALL=(ALL) NOPASSWD: /bin/brightness.sh" >> /etc/sudoers && \
 /bin/chown $username:$username -R $sway_config_folder && \
 /bin/chown $username:$username $username_home_folder/.zshrc && \
