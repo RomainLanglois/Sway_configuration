@@ -231,12 +231,17 @@ mode "$mode_system" {
 } 
 bindsym $mod+Shift+e mode "$mode_system"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    status_command while ~/.config/sway/swaybar/status.sh; do sleep 1; done
-}
+# Create gaps between applications
+gaps inner 5
+gaps outer 2
+
+# Disable Windows titlebar
+default_border pixel 2
+
+# set font
+font pango:Cantarell 14px
+
+# Exec waybar
+exec_always --no-startup-id "waybar -c ~/.config/waybar/config -s ~/.config/waybar/style.css"
 
 include /etc/sway/config.d/*
